@@ -1,0 +1,7 @@
+go 1.19
+
+use ./gateway
+
+use ./retry
+
+use ./socket
