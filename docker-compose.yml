@@ -11,25 +11,31 @@ services:
   #   working_dir: /app
   #   command: go run main.go
 
-  zookeeper:
-    image: confluentinc/cp-zookeeper:7.3.1
-    restart: unless-stopped
-    logging:
-      driver: none
-    environment:
-      ZOOKEEPER_CLIENT_PORT: 2181
-
-  kafka:
-    image: confluentinc/cp-kafka:7.3.1
-    restart: unless-stopped
+  redis:
+    image: redis:7
     ports:
-     - 9092:9092
-    depends_on:
-      - zookeeper
-    logging:
-      driver: none
-    environment:
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+      - "6379:6379"
+    restart: unless-stopped
+  # kafka as broker below
+  # zookeeper:
+  #   image: confluentinc/cp-zookeeper:7.3.1
+  #   restart: unless-stopped
+  #   logging:
+  #     driver: none
+  #   environment:
+  #     ZOOKEEPER_CLIENT_PORT: 2181
+
+  # kafka:
+  #   image: confluentinc/cp-kafka:7.3.1
+  #   restart: unless-stopped
+  #   ports:
+  #    - 9092:9092
+  #   depends_on:
+  #     - zookeeper
+  #   logging:
+  #     driver: none
+  #   environment:
+  #     KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+  #     KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+  #     KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+  #     KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
